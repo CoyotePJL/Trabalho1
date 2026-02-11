@@ -1,70 +1,60 @@
 const board = document.getElementById('board');
 const viewport = document.getElementById('viewport');
-const zoomDisplay = document.getElementById('zoom-level');
+const zoomDisplay = document.getElementById('zoom-info');
 
 let scale = 1;
-let posX = window.innerWidth / 2 - 2450;
-let posY = window.innerHeight / 2 - 2450;
-
+let posX = window.innerWidth / 2 - 2500;
+let posY = window.innerHeight / 2 - 2500;
 let isDragging = false;
 let lastX, lastY;
 
-// Função unificada para atualizar a tela
 function update() {
     board.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
     zoomDisplay.innerText = `${Math.round(scale * 100)}%`;
 }
 
-// Suporte para Mouse e Touch (Celular)
+// Navegação Suave entre seções
+function goTo(targetX, targetY) {
+    scale = 1;
+    posX = window.innerWidth / 2 - targetX;
+    posY = window.innerHeight / 2 - targetY;
+    board.style.transition = "transform 0.8s cubic-bezier(0.65, 0, 0.35, 1)";
+    update();
+    setTimeout(() => { board.style.transition = "none"; }, 800);
+}
+
+// Arrastar (Mouse e Touch)
 function onStart(e) {
     isDragging = true;
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
     const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    lastX = clientX;
-    lastY = clientY;
+    lastX = clientX; lastY = clientY;
 }
 
 function onMove(e) {
     if (!isDragging) return;
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
     const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    
-    const dx = clientX - lastX;
-    const dy = clientY - lastY;
-    
-    posX += dx;
-    posY += dy;
-    lastX = clientX;
-    lastY = clientY;
+    posX += (clientX - lastX);
+    posY += (clientY - lastY);
+    lastX = clientX; lastY = clientY;
     update();
 }
 
-function onEnd() { isDragging = false; }
+viewport.onmousedown = onStart;
+window.onmousemove = onMove;
+window.onmouseup = () => isDragging = false;
 
-// Eventos de Mouse
-viewport.addEventListener('mousedown', onStart);
-window.addEventListener('mousemove', onMove);
-window.addEventListener('mouseup', onEnd);
+viewport.ontouchstart = onStart;
+window.ontouchmove = onMove;
+window.ontouchend = () => isDragging = false;
 
-// Eventos de Toque (Celular)
-viewport.addEventListener('touchstart', onStart, {passive: false});
-window.addEventListener('touchmove', onMove, {passive: false});
-window.addEventListener('touchend', onEnd);
-
-// Zoom no Scroll
-viewport.addEventListener('wheel', (e) => {
+// Zoom
+viewport.onwheel = (e) => {
     e.preventDefault();
     const delta = e.deltaY > 0 ? 0.9 : 1.1;
-    scale = Math.min(Math.max(0.3, scale * delta), 2);
-    update();
-}, {passive: false});
-
-// Centralizar
-document.getElementById('reset-view').onclick = () => {
-    scale = 1;
-    posX = window.innerWidth / 2 - 2450;
-    posY = window.innerHeight / 2 - 2450;
+    scale = Math.min(Math.max(0.2, scale * delta), 2);
     update();
 };
 
-update(); // Inicia o site na posição correta
+update();
