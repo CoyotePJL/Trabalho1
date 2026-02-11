@@ -3,38 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FluentCanvas | English School</title>
+    <title>EdTech English | Inovação no Ensino</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <nav id="ui-layer">
-        <div class="logo">Fluent<b>Canvas</b></div>
-        <div id="zoom-level">100%</div>
+    <nav id="navbar">
+        <div class="logo">Tech<b>English</b></div>
+        <div class="menu-desktop">
+            <a href="#" onclick="goTo(2500, 2500)">Home</a>
+            <a href="#" onclick="goTo(3000, 2500)">Solução</a>
+            <a href="#" onclick="goTo(2500, 3000)">Sobre</a>
+        </div>
+        <div id="zoom-info">100%</div>
     </nav>
+
+    <div id="chat-widget">
+        <div class="chat-bubble">Dúvidas? Fale conosco!</div>
+        <button id="chat-button">💬</button>
+    </div>
 
     <div id="viewport">
         <div id="board">
-            <div class="card" style="left: 2350px; top: 2400px;">
-                <div class="card-header main">Welcome</div>
-                <div class="card-content">
-                    <h2>Ready to be fluent?</h2>
-                    <p>Arraste para explorar os módulos de ensino.</p>
-                </div>
+            
+            <div class="section-card" style="left: 2350px; top: 2350px; width: 450px;">
+                <div class="badge">Inovação & Tecnologia</div>
+                <h1>O Futuro do Inglês é Digital</h1>
+                <p>Unimos metodologia avançada e tecnologia de ponta para acelerar sua fluência.</p>
+                <button class="btn-main">Conheça nossa IA</button>
             </div>
 
-            <div class="card" style="left: 2700px; top: 2450px;">
-                <div class="card-header study">Module 01</div>
-                <div class="card-content">
-                    <h3>Daily Routine</h3>
-                    <p>Learn how to describe your day in English.</p>
-                    <button class="btn-action">Start Lesson</button>
-                </div>
+            <div class="section-card" style="left: 2900px; top: 2400px; width: 350px;">
+                <div class="badge active">Nossa Solução</div>
+                <h3>Plataforma Adaptativa</h3>
+                <p>Nossa IA identifica suas dificuldades e personaliza o conteúdo em tempo real.</p>
+                <ul class="features">
+                    <li>✅ Chat 24/7 para prática</li>
+                    <li>✅ Reconhecimento de voz</li>
+                    <li>✅ Dashboards de evolução</li>
+                </ul>
             </div>
+
+            <div class="section-card" style="left: 2400px; top: 2900px; width: 350px;">
+                <div class="badge">Sobre Nós</div>
+                <h3>Líderes em EdTech</h3>
+                <p>Mais de 10 anos transformando o ensino de idiomas através da tecnologia.</p>
+            </div>
+
         </div>
     </div>
-
-    <button id="reset-view">📍 Centralizar</button>
 
     <script src="script.js"></script>
 </body>
